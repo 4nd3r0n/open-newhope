@@ -1,0 +1,290 @@
+[gd_scene load_steps=9 format=3 uid="uid://yyr6qs603iaj"]
+
+[ext_resource type="Script" path="res://assets/nodes/entities/player/player.gd" id="1_hmyp2"]
+[ext_resource type="Texture2D" uid="uid://cdne23jfupj5d" path="res://assets/gtx/icon/icon.svg" id="1_skqt5"]
+[ext_resource type="Script" path="res://assets/nodes/entities/player/main/mainmenu.gd" id="3_m888c"]
+[ext_resource type="Script" path="res://assets/nodes/entities/player/main/main.gd" id="3_vgd5a"]
+[ext_resource type="Script" path="res://assets/nodes/entities/player/main/settings.gd" id="4_1g5b6"]
+[ext_resource type="Script" path="res://assets/nodes/entities/player/main/exit.gd" id="5_202we"]
+[ext_resource type="Theme" uid="uid://v8mflw3vyyrq" path="res://assets/themes/theme.tres" id="5_hk06r"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hcdyv"]
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("main")]
+script = ExtResource("1_hmyp2")
+main = NodePath("CanvasLayer/Main")
+vel = 140.0
+sprint = 280.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(1.9, 1.9)
+shape = SubResource("RectangleShape2D_hcdyv")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("1_skqt5")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Main" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("main", "mainmenu", "settings", "exit", "playButton")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_vgd5a")
+main = NodePath(".")
+mainmenu = NodePath("MainMenu")
+settings = NodePath("Settings")
+exit = NodePath("Exit")
+playButton = NodePath("MainMenu/MC/HC/VC/VC/PlayButton")
+
+[node name="MainMenu" type="Control" parent="CanvasLayer/Main" node_paths=PackedStringArray("playButton", "settingsButton", "exitButton")]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_top = 40.0
+offset_right = -40.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_m888c")
+playButton = NodePath("MC/HC/VC/VC/PlayButton")
+settingsButton = NodePath("MC/HC/VC/VC/SettingsButton")
+exitButton = NodePath("MC/HC/VC/VC/ExitButton")
+
+[node name="BackGround" type="ColorRect" parent="CanvasLayer/Main/MainMenu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.313726)
+
+[node name="MC" type="MarginContainer" parent="CanvasLayer/Main/MainMenu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 60.0
+offset_top = 40.0
+offset_right = -60.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HC" type="HBoxContainer" parent="CanvasLayer/Main/MainMenu/MC"]
+layout_mode = 2
+
+[node name="VC" type="VBoxContainer" parent="CanvasLayer/Main/MainMenu/MC/HC"]
+layout_mode = 2
+
+[node name="CC" type="CenterContainer" parent="CanvasLayer/Main/MainMenu/MC/HC/VC"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VC" type="VBoxContainer" parent="CanvasLayer/Main/MainMenu/MC/HC/VC"]
+layout_mode = 2
+
+[node name="PlayButton" type="Button" parent="CanvasLayer/Main/MainMenu/MC/HC/VC/VC"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../ExitButton")
+focus_neighbor_bottom = NodePath("../SettingsButton")
+focus_next = NodePath("../SettingsButton")
+focus_previous = NodePath("../ExitButton")
+theme = ExtResource("5_hk06r")
+theme_type_variation = &"FlatButton"
+text = "Play"
+flat = true
+
+[node name="SettingsButton" type="Button" parent="CanvasLayer/Main/MainMenu/MC/HC/VC/VC"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../PlayButton")
+focus_neighbor_bottom = NodePath("../ExitButton")
+focus_next = NodePath("../ExitButton")
+focus_previous = NodePath("../PlayButton")
+theme = ExtResource("5_hk06r")
+theme_type_variation = &"FlatButton"
+disabled = true
+text = "Settings"
+flat = true
+
+[node name="ExitButton" type="Button" parent="CanvasLayer/Main/MainMenu/MC/HC/VC/VC"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../SettingsButton")
+focus_neighbor_bottom = NodePath("../PlayButton")
+focus_next = NodePath("../PlayButton")
+focus_previous = NodePath("../SettingsButton")
+theme = ExtResource("5_hk06r")
+theme_type_variation = &"FlatButton"
+text = "Exit"
+flat = true
+
+[node name="VC2" type="VBoxContainer" parent="CanvasLayer/Main/MainMenu/MC/HC"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CC" type="CenterContainer" parent="CanvasLayer/Main/MainMenu/MC/HC/VC2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HC" type="HBoxContainer" parent="CanvasLayer/Main/MainMenu/MC/HC/VC2"]
+layout_mode = 2
+
+[node name="Settings" type="Control" parent="CanvasLayer/Main" node_paths=PackedStringArray("backButton")]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_top = 40.0
+offset_right = -40.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_1g5b6")
+backButton = NodePath("MC/HC/VC/VC/BackButton")
+
+[node name="BackGround" type="ColorRect" parent="CanvasLayer/Main/Settings"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.313726)
+
+[node name="MC" type="MarginContainer" parent="CanvasLayer/Main/Settings"]
+layout_mode = 0
+offset_left = 60.0
+offset_top = 40.0
+offset_right = 660.0
+offset_bottom = 480.0
+
+[node name="HC" type="HBoxContainer" parent="CanvasLayer/Main/Settings/MC"]
+layout_mode = 2
+
+[node name="VC" type="VBoxContainer" parent="CanvasLayer/Main/Settings/MC/HC"]
+layout_mode = 2
+
+[node name="CC" type="CenterContainer" parent="CanvasLayer/Main/Settings/MC/HC/VC"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VC" type="VBoxContainer" parent="CanvasLayer/Main/Settings/MC/HC/VC"]
+layout_mode = 2
+
+[node name="BackButton" type="Button" parent="CanvasLayer/Main/Settings/MC/HC/VC/VC"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../ExitButton")
+focus_neighbor_bottom = NodePath("../SettingsButton")
+focus_next = NodePath("../SettingsButton")
+focus_previous = NodePath("../ExitButton")
+theme = ExtResource("5_hk06r")
+theme_type_variation = &"FlatButton"
+text = "Back"
+flat = true
+
+[node name="VC2" type="VBoxContainer" parent="CanvasLayer/Main/Settings/MC/HC"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Exit" type="Control" parent="CanvasLayer/Main" node_paths=PackedStringArray("cancelButton", "exitButton")]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 280.0
+offset_top = 230.0
+offset_right = -220.0
+offset_bottom = -220.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("5_202we")
+cancelButton = NodePath("MC/VC/HC/CancelButton")
+exitButton = NodePath("MC/VC/HC/ExitButton")
+
+[node name="BackGround" type="ColorRect" parent="CanvasLayer/Main/Exit"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.313726)
+
+[node name="MC" type="MarginContainer" parent="CanvasLayer/Main/Exit"]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 25.0
+offset_right = 260.0
+offset_bottom = 125.0
+
+[node name="VC" type="VBoxContainer" parent="CanvasLayer/Main/Exit/MC"]
+layout_mode = 2
+
+[node name="ExitLabel" type="Label" parent="CanvasLayer/Main/Exit/MC/VC"]
+layout_mode = 2
+size_flags_vertical = 6
+theme = ExtResource("5_hk06r")
+theme_override_font_sizes/font_size = 20
+text = "Do you Exit the game?"
+horizontal_alignment = 1
+
+[node name="HC" type="HBoxContainer" parent="CanvasLayer/Main/Exit/MC/VC"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="CancelButton" type="Button" parent="CanvasLayer/Main/Exit/MC/VC/HC"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_neighbor_top = NodePath("../ExitButton")
+focus_neighbor_bottom = NodePath("../SettingsButton")
+focus_next = NodePath("../SettingsButton")
+focus_previous = NodePath("../ExitButton")
+theme = ExtResource("5_hk06r")
+theme_type_variation = &"FlatButton"
+text = "Cancel"
+flat = true
+
+[node name="ExitButton" type="Button" parent="CanvasLayer/Main/Exit/MC/VC/HC"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_neighbor_top = NodePath("../ExitButton")
+focus_neighbor_bottom = NodePath("../SettingsButton")
+focus_next = NodePath("../SettingsButton")
+focus_previous = NodePath("../ExitButton")
+theme = ExtResource("5_hk06r")
+theme_type_variation = &"FlatButton"
+text = "Exit"
+flat = true
+
+[connection signal="visibility_changed" from="CanvasLayer/Main/MainMenu" to="CanvasLayer/Main/MainMenu" method="_on_visibility_changed"]
+[connection signal="gui_input" from="CanvasLayer/Main/MainMenu/MC/HC/VC/VC/PlayButton" to="CanvasLayer/Main/MainMenu" method="_on_play_button_gui_input"]
+[connection signal="mouse_entered" from="CanvasLayer/Main/MainMenu/MC/HC/VC/VC/PlayButton" to="CanvasLayer/Main/MainMenu" method="_on_play_button_mouse_entered"]
+[connection signal="pressed" from="CanvasLayer/Main/MainMenu/MC/HC/VC/VC/PlayButton" to="CanvasLayer/Main" method="_on_play_button_pressed"]
+[connection signal="gui_input" from="CanvasLayer/Main/MainMenu/MC/HC/VC/VC/SettingsButton" to="CanvasLayer/Main/MainMenu" method="_on_settings_button_gui_input"]
+[connection signal="mouse_entered" from="CanvasLayer/Main/MainMenu/MC/HC/VC/VC/SettingsButton" to="CanvasLayer/Main/MainMenu" method="_on_settings_button_mouse_entered"]
+[connection signal="pressed" from="CanvasLayer/Main/MainMenu/MC/HC/VC/VC/SettingsButton" to="CanvasLayer/Main" method="_on_settings_button_pressed"]
+[connection signal="gui_input" from="CanvasLayer/Main/MainMenu/MC/HC/VC/VC/ExitButton" to="CanvasLayer/Main/MainMenu" method="_on_exit_button_gui_input"]
+[connection signal="mouse_entered" from="CanvasLayer/Main/MainMenu/MC/HC/VC/VC/ExitButton" to="CanvasLayer/Main/MainMenu" method="_on_exit_button_mouse_entered"]
+[connection signal="pressed" from="CanvasLayer/Main/MainMenu/MC/HC/VC/VC/ExitButton" to="CanvasLayer/Main" method="_on_exit_button_pressed"]
+[connection signal="visibility_changed" from="CanvasLayer/Main/Settings" to="CanvasLayer/Main/Settings" method="_on_visibility_changed"]
+[connection signal="gui_input" from="CanvasLayer/Main/Settings/MC/HC/VC/VC/BackButton" to="CanvasLayer/Main/Settings" method="_on_back_button_gui_input"]
+[connection signal="mouse_entered" from="CanvasLayer/Main/Settings/MC/HC/VC/VC/BackButton" to="CanvasLayer/Main/Settings" method="_on_back_button_mouse_entered"]
+[connection signal="pressed" from="CanvasLayer/Main/Settings/MC/HC/VC/VC/BackButton" to="CanvasLayer/Main" method="_on_back_button_pressed"]
+[connection signal="visibility_changed" from="CanvasLayer/Main/Exit" to="CanvasLayer/Main/Exit" method="_on_visibility_changed"]
+[connection signal="gui_input" from="CanvasLayer/Main/Exit/MC/VC/HC/CancelButton" to="CanvasLayer/Main/Exit" method="_on_cancel_button_gui_input"]
+[connection signal="mouse_entered" from="CanvasLayer/Main/Exit/MC/VC/HC/CancelButton" to="CanvasLayer/Main/Exit" method="_on_cancel_button_mouse_entered"]
+[connection signal="pressed" from="CanvasLayer/Main/Exit/MC/VC/HC/CancelButton" to="CanvasLayer/Main" method="_on_cancel_button_pressed"]
+[connection signal="gui_input" from="CanvasLayer/Main/Exit/MC/VC/HC/ExitButton" to="CanvasLayer/Main/Exit" method="_on_exit_button_gui_input"]
+[connection signal="mouse_entered" from="CanvasLayer/Main/Exit/MC/VC/HC/ExitButton" to="CanvasLayer/Main/Exit" method="_on_exit_button_mouse_entered"]
+[connection signal="pressed" from="CanvasLayer/Main/Exit/MC/VC/HC/ExitButton" to="CanvasLayer/Main/Exit" method="_on_exit_button_pressed"]

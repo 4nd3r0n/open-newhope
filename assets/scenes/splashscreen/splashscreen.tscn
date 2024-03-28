@@ -1,0 +1,114 @@
+[gd_scene load_steps=6 format=3 uid="uid://d043etoacas0o"]
+
+[ext_resource type="Script" path="res://assets/scenes/splashscreen/splashscreen.gd" id="1_trjpk"]
+[ext_resource type="Theme" uid="uid://v8mflw3vyyrq" path="res://assets/themes/theme.tres" id="2_71j4x"]
+
+[sub_resource type="Animation" id="Animation_qdlkw"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MC/CC/Label:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MC/CC/Label:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_4ovob"]
+resource_name = "SplashScreen"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MC/CC/Label:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.1, 0.7, 2.6, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MC/CC/Label:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_t5leq"]
+_data = {
+"RESET": SubResource("Animation_qdlkw"),
+"SplashScreen": SubResource("Animation_4ovob")
+}
+
+[node name="SplashScreen" type="Control" node_paths=PackedStringArray("animationScreen")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_trjpk")
+main_scene = "res://assets/levels/main/mainnevel.tscn"
+animationScreen = NodePath("AnimationScreen")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="MC" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 100.0
+offset_top = 100.0
+offset_right = -100.0
+offset_bottom = -100.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CC" type="CenterContainer" parent="MC"]
+layout_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="MC/CC"]
+
+[node name="Label" type="Label" parent="MC/CC"]
+layout_mode = 2
+theme = ExtResource("2_71j4x")
+text = "Anderon Studios"
+
+[node name="AnimationScreen" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_t5leq")
+}
+
+[connection signal="animation_finished" from="AnimationScreen" to="." method="_on_animation_screen_animation_finished"]

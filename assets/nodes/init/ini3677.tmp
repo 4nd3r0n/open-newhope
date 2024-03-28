@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://cqr3s7fp1t2wy"]
+
+[ext_resource type="Script" path="res://assets/nodes/init/init.gd" id="1_ptnrb"]
+
+[node name="Init" type="Node"]
+script = ExtResource("1_ptnrb")
+load_splashscreen = "res://assets/scenes/main/main.tscn"
+load_mainscreen = "res://assets/scenes/splashscreen/splashscreen.tscn"
+egg = 666
+load_egg = "res://assets/scenes/main/main.tscn"
