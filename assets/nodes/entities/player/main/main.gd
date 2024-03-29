@@ -2,6 +2,7 @@ extends Control
 
 enum buttons {PLAY, SETTINGS, EXIT}
 
+@export var controls: Control
 @export var main: Control
 
 @export_category("Menus Control")

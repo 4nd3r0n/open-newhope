@@ -25,7 +25,7 @@ func _on_play_button_gui_input(_event: InputEvent):
 func _on_settings_button_gui_input(_event: InputEvent):
 	if _event is InputEventJoypadButton:
 		if _event.button_index == 0 and _event.pressed == false:
-			settingsButton.emit_signal("pressed")
+			pass
 
 func _on_exit_button_gui_input(_event: InputEvent):
 	if _event is InputEventJoypadButton:

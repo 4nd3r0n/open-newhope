@@ -1,20 +1,49 @@
-[gd_scene load_steps=9 format=3 uid="uid://yyr6qs603iaj"]
+[gd_scene load_steps=29 format=3 uid="uid://yyr6qs603iaj"]
 
 [ext_resource type="Script" path="res://assets/nodes/entities/player/player.gd" id="1_hmyp2"]
 [ext_resource type="Texture2D" uid="uid://cdne23jfupj5d" path="res://assets/gtx/icon/icon.svg" id="1_skqt5"]
 [ext_resource type="Script" path="res://assets/nodes/entities/player/main/mainmenu.gd" id="3_m888c"]
 [ext_resource type="Script" path="res://assets/nodes/entities/player/main/main.gd" id="3_vgd5a"]
+[ext_resource type="Script" path="res://assets/nodes/entities/player/Controls.gd" id="3_wo1uj"]
 [ext_resource type="Script" path="res://assets/nodes/entities/player/main/settings.gd" id="4_1g5b6"]
+[ext_resource type="Texture2D" uid="uid://cdfva7h48jwgw" path="res://assets/gtx/ui/buttons/buttons_0001.png" id="4_npbgd"]
 [ext_resource type="Script" path="res://assets/nodes/entities/player/main/exit.gd" id="5_202we"]
 [ext_resource type="Theme" uid="uid://v8mflw3vyyrq" path="res://assets/themes/theme.tres" id="5_hk06r"]
+[ext_resource type="Texture2D" uid="uid://b3rq766ou8om4" path="res://assets/gtx/ui/buttons/buttons_0005.png" id="5_rcfrx"]
+[ext_resource type="Texture2D" uid="uid://be5cambp10wag" path="res://assets/gtx/ui/buttons/buttons_0002.png" id="6_tpy8q"]
+[ext_resource type="Texture2D" uid="uid://6hsvgj8h3pli" path="res://assets/gtx/ui/buttons/buttons_0006.png" id="7_pdbe5"]
+[ext_resource type="Texture2D" uid="uid://cjnh6c1p3tbfs" path="res://assets/gtx/ui/buttons/buttons_0003.png" id="8_qae32"]
+[ext_resource type="Texture2D" uid="uid://tluewf032g68" path="res://assets/gtx/ui/buttons/buttons_0007.png" id="9_44olm"]
+[ext_resource type="Texture2D" uid="uid://e7yksltng8nv" path="res://assets/gtx/ui/buttons/buttons_0004.png" id="10_5sxrc"]
+[ext_resource type="Texture2D" uid="uid://dps40ivxp4m37" path="res://assets/gtx/ui/buttons/buttons_0008.png" id="11_5skl6"]
+[ext_resource type="Texture2D" uid="uid://bq32b8b6mcysv" path="res://assets/gtx/ui/buttons/buttons_0010.png" id="11_8mxip"]
+[ext_resource type="Texture2D" uid="uid://bb6x2p6trjjbp" path="res://assets/gtx/ui/joystick/joystick_0001.png" id="12_o06nk"]
+[ext_resource type="Texture2D" uid="uid://vst3ul44h3g5" path="res://assets/gtx/ui/joystick/joystick_0002.png" id="13_birt1"]
+[ext_resource type="Script" path="res://assets/nodes/entities/player/JoyStick.gd" id="13_n640n"]
+[ext_resource type="Texture2D" uid="uid://7lq3uwbjt74y" path="res://assets/gtx/ui/buttons/buttons_0009.png" id="15_3aht4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hcdyv"]
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("main")]
+[sub_resource type="CircleShape2D" id="CircleShape2D_x168f"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cdry0"]
+size = Vector2(25, 25)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_avhd8"]
+size = Vector2(25, 25)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vvj7s"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_v5pbj"]
+radius = 12.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_x3aum"]
+radius = 12.0
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("main", "coyote_timer")]
 script = ExtResource("1_hmyp2")
 main = NodePath("CanvasLayer/Main")
-vel = 140.0
-sprint = 280.0
+coyote_timer = NodePath("Timer")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2(1.9, 1.9)
@@ -24,7 +53,101 @@ shape = SubResource("RectangleShape2D_hcdyv")
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("1_skqt5")
 
+[node name="Timer" type="Timer" parent="."]
+process_callback = 0
+wait_time = 0.5
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Controls" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("controls")]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_wo1uj")
+controls = NodePath(".")
+
+[node name="JoyStick" type="TouchScreenButton" parent="CanvasLayer/Controls" node_paths=PackedStringArray("stick")]
+visible = false
+position = Vector2(100, 400)
+scale = Vector2(10, 10)
+texture_normal = ExtResource("12_o06nk")
+shape = SubResource("CircleShape2D_x168f")
+action = "ui_sprint"
+visibility_mode = 1
+script = ExtResource("13_n640n")
+stick = NodePath("Stick")
+
+[node name="Stick" type="Sprite2D" parent="CanvasLayer/Controls/JoyStick"]
+position = Vector2(8, 7.9)
+texture = ExtResource("13_birt1")
+
+[node name="LeftTSB" type="TouchScreenButton" parent="CanvasLayer/Controls"]
+position = Vector2(50, 490)
+scale = Vector2(5, 5)
+texture_normal = ExtResource("4_npbgd")
+texture_pressed = ExtResource("5_rcfrx")
+shape = SubResource("RectangleShape2D_cdry0")
+passby_press = true
+action = "ui_left"
+visibility_mode = 1
+
+[node name="RightTSB" type="TouchScreenButton" parent="CanvasLayer/Controls"]
+position = Vector2(175, 490)
+scale = Vector2(5, 5)
+texture_normal = ExtResource("6_tpy8q")
+texture_pressed = ExtResource("7_pdbe5")
+shape = SubResource("RectangleShape2D_avhd8")
+passby_press = true
+action = "ui_right"
+visibility_mode = 1
+
+[node name="SprintLeftTSB" type="TouchScreenButton" parent="CanvasLayer/Controls"]
+position = Vector2(35, 480)
+scale = Vector2(3.5, 6.2)
+texture_normal = ExtResource("11_8mxip")
+shape = SubResource("RectangleShape2D_vvj7s")
+passby_press = true
+action = "ui_sprint"
+
+[node name="SprintRightTSB" type="TouchScreenButton" parent="CanvasLayer/Controls"]
+position = Vector2(215, 480)
+scale = Vector2(3.5, 6.2)
+texture_normal = ExtResource("11_8mxip")
+shape = SubResource("RectangleShape2D_vvj7s")
+passby_press = true
+action = "ui_sprint"
+
+[node name="ATSB" type="TouchScreenButton" parent="CanvasLayer/Controls"]
+position = Vector2(550, 490)
+scale = Vector2(5, 5)
+texture_normal = ExtResource("8_qae32")
+texture_pressed = ExtResource("9_44olm")
+shape = SubResource("CircleShape2D_v5pbj")
+passby_press = true
+visibility_mode = 1
+
+[node name="BTSB" type="TouchScreenButton" parent="CanvasLayer/Controls"]
+position = Vector2(675, 490)
+scale = Vector2(5, 5)
+texture_normal = ExtResource("10_5sxrc")
+texture_pressed = ExtResource("11_5skl6")
+shape = SubResource("CircleShape2D_x3aum")
+passby_press = true
+action = "ui_jump"
+visibility_mode = 1
+
+[node name="PauseTSB" type="TouchScreenButton" parent="CanvasLayer/Controls"]
+position = Vector2(375, 25)
+scale = Vector2(3.5, 3.5)
+texture_normal = ExtResource("15_3aht4")
+shape = SubResource("CircleShape2D_x3aum")
+passby_press = true
+action = "ui_menu"
+visibility_mode = 1
 
 [node name="Main" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("main", "mainmenu", "settings", "exit", "playButton")]
 layout_mode = 3
@@ -267,6 +390,16 @@ theme_type_variation = &"FlatButton"
 text = "Exit"
 flat = true
 
+[node name="Interfaz" type="Control" parent="CanvasLayer"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="visibility_changed" from="CanvasLayer/Main/MainMenu" to="CanvasLayer/Main/MainMenu" method="_on_visibility_changed"]
 [connection signal="gui_input" from="CanvasLayer/Main/MainMenu/MC/HC/VC/VC/PlayButton" to="CanvasLayer/Main/MainMenu" method="_on_play_button_gui_input"]
 [connection signal="mouse_entered" from="CanvasLayer/Main/MainMenu/MC/HC/VC/VC/PlayButton" to="CanvasLayer/Main/MainMenu" method="_on_play_button_mouse_entered"]

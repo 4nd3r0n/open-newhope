@@ -47,6 +47,7 @@ texture = ExtResource("2_7qq52")
 
 [node name="Player" parent="." instance=ExtResource("2_2hd41")]
 position = Vector2(295, 500)
+jump = 650.0
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 limit_left = 0
